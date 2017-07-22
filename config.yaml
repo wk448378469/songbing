@@ -1,0 +1,6 @@
+name: songbing
+version: 1
+
+libraries:
+- name: "webpy"
+  version: "0.36"
