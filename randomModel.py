@@ -7,16 +7,8 @@ Created on Sat Jul 15 16:57:48 2017
 """
 
 import random
-from sae.storage import Bucket,Connection
-
+import os
 
 def randomModel():
-    c=Connection()
-    bucket=c.get_bucket('models')
-    
-    allcontent = [i for i in bucket.list()]
-    modelList = []
-    for i in range(len(allcontent)):
-        modelList.append(allcontent[i]['name'].encode('utf-8'))
-    
+    modelList = os.listdir('models')
     return random.choice(modelList)

@@ -8,16 +8,13 @@ Created on Sun Jul 23 10:47:45 2017
 
 from __future__ import print_function
 import tensorflow as tf
-from sae.ext.storage import monkey
 
-import preprocessing_factory
-import reader
-import model
+from neuralstyle import preprocessing_factory
+from neuralstyle import reader
+from neuralstyle import model
 
 def neualstyle(model_file,image_file):
-    
-    # sae的storage可以以文件路径的形式访问 
-    monkey.patch_all()
+
     # 初始化参数
     loss_model = 'vgg_16'
     height = 0
