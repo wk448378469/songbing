@@ -7,6 +7,7 @@ Created on Sat Jul 22 10:04:04 2017
 
 import os
 import web
+import itchat
 
 from App import App
 
