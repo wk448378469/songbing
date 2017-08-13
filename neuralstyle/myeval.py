@@ -8,10 +8,12 @@ Created on Sun Jul 23 10:47:45 2017
 
 from __future__ import print_function
 import tensorflow as tf
-
+import os
 from neuralstyle import preprocessing_factory
 from neuralstyle import reader
 from neuralstyle import model
+
+
 
 def neualstyle(model_file,image_file):
 
@@ -54,6 +56,6 @@ def neualstyle(model_file,image_file):
             
             # 保存图片
             generated_name = image_file.split('/')[-1]
-            generated_file = '/s/neuralpic/' + generated_name
+            generated_file = os.getcwd() + '/neuralstyle/neuralpic/' + generated_name
             with open(generated_file,'wb') as img:
                 img.write(sess.run(tf.image.encode_jpeg(generated)))
