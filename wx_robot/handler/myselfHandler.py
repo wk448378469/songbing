@@ -14,9 +14,10 @@ class Register(object):
         self.type = 'text'
         
     def match(self, msg):
-        if msg.text.startswith('/m') and msg['FromUserName']=='xxxx':
+        if msg.text.startswith('/m'):
             return True
-        return False
+        else:
+	    return False
 
     def handle(self, msg):
         if any(p in msg.text for p in ['cpu', 'c', 'm', 'mem']):

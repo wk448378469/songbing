@@ -19,7 +19,7 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-from neuralstyle import vgg_preprocessing
+from . import vgg_preprocessing
 
 slim = tf.contrib.slim
 

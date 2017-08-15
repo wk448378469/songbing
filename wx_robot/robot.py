@@ -8,14 +8,41 @@ Created on Sun Aug 13 23:21:50 2017
 from itchat.core import Core
 from itchat.content import *
 import platform
+import os
 
 class wxRobot(object):
-    def __init__(self, hot_reload = False , defaultMsg = u'暂未支持'):
+    '''weixin robot class
+
+    参数说明:
+    -----------
+        
+        hot_reload(bool):退出程序后暂存登陆状态，默认为True
+
+        defaultMsg(str):用户发送不支持的图片时返回的文本信息
+
+        MAINDIR(str):程序主目录
+
+        handlers(dict):处理器的字典，默认为空，registerHandler可添加，仅支持text、map、picture、note四类默认
+
+    方法说明:
+    -----------
+
+        judgmentSystem:判断主机系统
+
+        registerHandler:注册添加处理器
+
+        dispathc:调度函数，机器人接受信息后，判断使用什么已注册的处理器
+
+        run:启动机器人
+
+    '''
+    def __init__(self, maindir, hot_reload = False , defaultMsg = u'暂未支持的图片格式'):
         self.hot_reload = hot_reload
         self.wx = Core()
         self.handlers = {'text':[], 'map':[], 'picture':[], 'note':[]}
         self.enableCmdQR = self.judgmentSystem()
         self.default_msg = defaultMsg
+        self.MAINDIR = maindir + '/wx_robot'
     
     def judgmentSystem(self):
         imformation = platform.platform()
@@ -32,35 +59,44 @@ class wxRobot(object):
             self.handlers[htype].append(handler)
     
     def dispatch(self):
-        @self.wx.msg_register([TEXT], isGroupChat=False)
+        @self.wx.msg_register(TEXT)
         def _dispatchText(msg):
             for h in self.handlers['text']:
                 if h.match(msg):
                     self.wx.send(h.handle(msg), toUserName=msg['FromUserName'])
+                    break
 
-        @self.wx.msg_register([MAP], isGroupChat=False)
+
+        @self.wx.msg_register(MAP)
         def _dispatchMap(msg):
             for h in self.handlers['map']:
                 if h.match(msg):
-                    self.wx.send('@img@%s' % h.handle(msg) , msg['FromUserName'])
+                    self.wx.send(h.handle(msg), toUserName=msg['FromUserName'])
 
-        @self.wx.msg_register([PICTURE], isGroupChat=False)
+        @self.wx.msg_register(PICTURE)
         def _dispatchPic(msg):
+            picpath = self.MAINDIR + '/userpic/' + msg['FileName']
+            msg['Text'](picpath)
             for h in self.handlers['picture']:
                 if h.match(msg):
-                    self.wx.send(h.handle(msg), toUserName=msg['FromUserName'])
-        
-        @self.wx.msg_register([NOTE], isGroupChat=False)
+                    result,returnData = h.handle(msg,picpath)
+                    if result:
+                        self.wx.send('@img@%s' % returnData , msg['FromUserName'])
+                    else:
+                        self.wx.send(returnData, msg['FromUserName'])
+                else:
+                    self.wx.send(self.default_msg, msg['FromUserName'])
+
+        @self.wx.msg_register(NOTE)
         def _dispathNote(msg):
-            for h in self.handlers['Note']:
+            for h in self.handlers['note']:
                 if h.match(msg):
-                    self.wx.send(h.handle(msg), toUserName=msg['FromUserName'])
-                    # 这个地方在加一个参数，去判断性别的吧~
+                    self.wx.send(h.handle(), toUserName=msg['FromUserName'])
 
         @self.wx.msg_register(FRIENDS)
         def add_friend(msg):
             self.wx.add_friend(**msg['Text'])
-            self.wx.send_msg(u'很高兴遇到你', msg['RecommendInfo']['UserName'])
+            self.wx.send_msg(u'很高兴遇见你', msg['RecommendInfo']['UserName'])
 
     def run(self):
         self.dispatch()

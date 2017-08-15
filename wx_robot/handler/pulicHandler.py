@@ -5,22 +5,23 @@ Created on Sun Aug 13 23:21:02 2017
 @author: 凯风
 """
 
-class Register(object):
+help_msg = u'''发送图片：将其转化为艺术风格
+发送定位：预测PM2.5(未完成)
+发送代码：获取该机器人源代码
+发送说明：获取机器人使用说明(未完成)'''
 
+class Register(object):
+    """public message handler
+    """
     def __init__(self):
         self.type = 'text'
-        self.HELP_MSG = u'''\
-                    欢迎使用开发机器人
-                    发送图片：转化为艺术风格
-                    发送定位：预测PM2.5
-                    发送代码：获取源代码
-                    发送说明：获取说明推送
-                    '''
+        self.HELP_MSG = help_msg
     
     def match(self, msg):
-        if msg.text in [u'帮助', u'代码', u'说明']:
+        if msg.text == u'帮助' or msg.text == u'代码' or msg.text == u'说明':
             return True
-        return False
+        else:
+            return False
 
     def handle(self, msg):
         if msg.text == u'帮助':

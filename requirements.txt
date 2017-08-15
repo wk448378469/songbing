@@ -2,3 +2,4 @@ tensorflow
 itchat
 psutil
 requests
+psutil
