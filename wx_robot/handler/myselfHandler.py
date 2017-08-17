@@ -14,10 +14,10 @@ class Register(object):
         self.type = 'text'
         
     def match(self, msg):
-        if msg.text.startswith('/m'):
+        if msg.text.startswith('/kf'):
             return True
         else:
-	    return False
+            return False
 
     def handle(self, msg):
         if any(p in msg.text for p in ['cpu', 'c', 'm', 'mem']):
