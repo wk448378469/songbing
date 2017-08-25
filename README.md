@@ -49,6 +49,7 @@ pip install -r requirements.txt
 			* stockCodeList.csv（股票代码列表）
 			* test.py（预测股票的核心函数）
 
-[effect]: https://github.com/wk448378469/songbing/tree/master/wx_robot/userpic/effect.png
-[neuralpic]: https://github.com/wk448378469/songbing/tree/master/wx_robot/handler/neuralstyle/neuralpic/test.png
-[stockpic]: https://github.com/wk448378469/songbing/tree/master/wx_robot/handler/predictStock/predictResult/test.png
+## 其他
+小豆机器人申请地址：http://xiao.douqq.com/
+人脸识别申请地址：https://www.faceplusplus.com.cn/
+模型生成方法：https://github.com/hzy46/fast-neural-style-tensorflow

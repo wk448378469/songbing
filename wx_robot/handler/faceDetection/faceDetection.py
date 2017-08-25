@@ -22,8 +22,8 @@ def detection(picurl):
       识别结果
     """
     httpUrl = 'https://api-cn.faceplusplus.com/facepp/v3/detect'
-    key = 'I7bWVph8XNRCT8cXMw9GL2Ob4MsJ8DqS'
-    secret = '5e_fj-GYIZkDRO5nHrh8STI6ZQg66s_V'
+    key = ''
+    secret = ''
     returnAttributes = 'gender,age,emotion'
     boundary = '----------%s' % hex(int(time.time() *1000))
     data = []

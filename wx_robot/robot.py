@@ -76,7 +76,7 @@ class wxRobot(object):
             picpath = self.MAINDIR + '/userpic/' + msg['FileName']
             msg['Text'](picpath)
             if os.path.getsize(picpath)/1024 >= 200:
-                self.wx.send(u'图片太大啦，请不要点击微信中的发送原图~'，msg['FromUserName'] )
+                self.wx.send(u'图片太大啦，请不要点击微信中的发送原图~',msg['FromUserName'] )
             else:
                 for h in self.handlers['picture']:
                     if h.match(msg):
