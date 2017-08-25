@@ -19,8 +19,8 @@ pip install -r requirements.txt
 
 ## 效果
 ![effect](https://github.com/wk448378469/songbing/raw/master/wx_robot/userpic/effect.png)
-![neuralpic](https://github.com/wk448378469/songbing/wx_robot/handler/neuralstyle/neuralpic/test.png)
-![stockpic](https://github.com/wk448378469/songbing/wx_robot/handler/predictStock/predictResult/test.png)
+![neuralpic](https://github.com/wk448378469/songbing/raw/master/wx_robot/handler/neuralstyle/neuralpic/test.png)
+![stockpic](https://github.com/wk448378469/songbing/raw/master/wx_robot/handler/predictStock/predictResult/test.png)
 
 ## 结构
 * App.py (主程序，初始化并注册处理器)
