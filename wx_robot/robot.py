@@ -75,17 +75,20 @@ class wxRobot(object):
         def _dispatchPic(msg):
             picpath = self.MAINDIR + '/userpic/' + msg['FileName']
             msg['Text'](picpath)
-            for h in self.handlers['picture']:
-                if h.match(msg):
-                    sendPic,returnData = h.handle(msg,picpath)
-                    if sendPic:
-                        self.wx.send('@img@%s' % returnData , msg['FromUserName'])
+            if os.path.getsize(picpath)/1024 >= 200:
+                self.wx.send(u'图片太大啦，请不要点击微信中的发送原图~')
+            else:
+                for h in self.handlers['picture']:
+                    if h.match(msg):
+                        sendPic,returnData = h.handle(msg,picpath)
+                        if sendPic:
+                            self.wx.send('@img@%s' % returnData , msg['FromUserName'])
+                        else:
+                            self.wx.send(returnData, msg['FromUserName'])
                     else:
-                        self.wx.send(returnData, msg['FromUserName'])
-                else:
-                    self.wx.send(self.default_msg, msg['FromUserName'])
-                del h
-                
+                        self.wx.send(self.default_msg, msg['FromUserName'])
+                    del h
+
         @self.wx.msg_register(NOTE)
         def _dispathNote(msg):
             for h in self.handlers['note']:
