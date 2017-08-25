@@ -12,10 +12,10 @@
 ## 安装
 pip install -r requirements.txt
 
-### 使用
-1、cd songbing  
-2、python App.py  
-3、打开手机微信扫一扫，完成登录  
+## 使用
+1. cd songbing  
+2. python App.py  
+3. 打开手机微信扫一扫，完成登录  
 
 ## 效果
 ![chateffect][effect] ![neural][neuralpic] ![stock][stockpic]
