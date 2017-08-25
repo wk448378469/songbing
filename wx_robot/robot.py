@@ -39,7 +39,7 @@ class wxRobot(object):
     def __init__(self, maindir, hot_reload = False , defaultMsg = u'暂未支持的图片格式'):
         self.hot_reload = hot_reload
         self.wx = Core()
-        self.handlers = {'text':[], 'map':[], 'picture':[], 'note':[]}
+        self.handlers = {'text':[], 'picture':[], 'note':[]}
         self.enableCmdQR = self.judgmentSystem()
         self.default_msg = defaultMsg
         self.MAINDIR = maindir + '/wx_robot'
@@ -63,15 +63,13 @@ class wxRobot(object):
         def _dispatchText(msg):
             for h in self.handlers['text']:
                 if h.match(msg):
-                    self.wx.send(h.handle(msg), toUserName=msg['FromUserName'])
+                    sendPic, returnData = h.handle(msg)
+                    if sendPic:
+                        self.wx.send('@img@%s' % returnData , msg['FromUserName'])
+                    else:
+                        self.wx.send(returnData, msg['FromUserName'])
+                    del h
                     break
-
-
-        @self.wx.msg_register(MAP)
-        def _dispatchMap(msg):
-            for h in self.handlers['map']:
-                if h.match(msg):
-                    self.wx.send(h.handle(msg), toUserName=msg['FromUserName'])
 
         @self.wx.msg_register(PICTURE)
         def _dispatchPic(msg):
@@ -79,19 +77,25 @@ class wxRobot(object):
             msg['Text'](picpath)
             for h in self.handlers['picture']:
                 if h.match(msg):
-                    result,returnData = h.handle(msg,picpath)
-                    if result:
+                    sendPic,returnData = h.handle(msg,picpath)
+                    if sendPic:
                         self.wx.send('@img@%s' % returnData , msg['FromUserName'])
                     else:
                         self.wx.send(returnData, msg['FromUserName'])
                 else:
                     self.wx.send(self.default_msg, msg['FromUserName'])
-
+                del h
+                
         @self.wx.msg_register(NOTE)
         def _dispathNote(msg):
             for h in self.handlers['note']:
                 if h.match(msg):
-                    self.wx.send(h.handle(), toUserName=msg['FromUserName'])
+                    sendPic,returnData = h.handle(msg)
+                    if sendPic:
+                        self.wx.send('@img@%s' % returnData, msg['FromUserName'])
+                    else:
+                        self.wx.send(returnData, msg['FromUserName'])
+                    del h
 
         @self.wx.msg_register(FRIENDS)
         def add_friend(msg):

@@ -2,4 +2,7 @@ tensorflow
 itchat
 psutil
 requests
-psutil
+sklearn
+tushare
+pandas
+matplotlib

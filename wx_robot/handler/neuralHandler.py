@@ -15,6 +15,7 @@ class Register(object):
     def __init__(self,maindir):
         self.type = 'picture'
         self.maindir = maindir + '/wx_robot/handler/neuralstyle'
+        self.sendPic = True
         
     def match(self, msg):
         if msg.FileName.split('.')[-1] in ['png','jpg','jpeg']:
@@ -27,7 +28,6 @@ class Register(object):
         """
         # 人脸识别
         detectionResuilt = detection(picpath)
-        print(detectionResuilt)
         msg.user.send(detectionResuilt)
         
         # 艺术风格图片转换
@@ -37,6 +37,6 @@ class Register(object):
             print(picpath)
             neualstyle(modelFile, picpath)
             returnPicPath = self.maindir + '/neuralpic/' + msg['FileName']
-            return True , returnPicPath
+            return self.sendPic , returnPicPath
         except:
-            return False, u'(*´Д｀*) ，图片转换失败，请重试'
+            return not self.sendPic,  u'(*´Д｀*) ，图片转换失败，请重试'
