@@ -10,6 +10,10 @@ from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import numpy as np
+
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from datetime import datetime,timedelta
@@ -151,7 +155,6 @@ class mySVR(object):
         return self.drawing()
                            
     def drawing(self):
-
         plt.style.use('fivethirtyeight')
         fig = plt.figure(figsize=(12,6.5), dpi=100)
         fig.suptitle('stock:%s opening price predict ' % self.code, fontsize=20)

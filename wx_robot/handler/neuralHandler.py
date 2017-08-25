@@ -31,7 +31,7 @@ class Register(object):
             detectionResuilt = detection(picpath)
             msg.user.send(detectionResuilt)
         except:
-            mgs.user.send(u'图像识别失败，正在进行艺术风格处理...')
+            mgs.user.send(u'人脸识别失败，正在进行艺术风格处理...')
 
         # 艺术风格图片转换
         modelFile = self.maindir + '/models/' + randomModel()
